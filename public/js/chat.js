@@ -46,10 +46,10 @@ socket.on("message", msg => {
     username: msg.username,
     message: msg.text,
     createdAt: moment(msg.createdAt).format("h:mm a")
-  });
-  // var c = document.createElement('audio')
-  // c.src = 'http://assets1.theroomsoundboard.com/TearingMeApartLisa.mp3'
-  // c.play();
+  }); 
+  var c = document.createElement('audio')
+  c.src = 'http://assets1.theroomsoundboard.com/TearingMeApartLisa.mp3'
+  c.play();
   $messages.insertAdjacentHTML("beforeend", html);
   autoscroll()
 });
