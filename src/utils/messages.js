@@ -1,5 +1,6 @@
-  const generateMessage = (text,username) => {
+  const generateMessage = ( audiof,text,username) => {
     return {
+      audiof,
       username: [username? username:"Tommy Wisseau"],
       text,
       createdAt: new Date().getTime()

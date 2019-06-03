@@ -2,7 +2,7 @@ const path = require("path");
 const http = require("http");
 const express = require("express");
 const socketio = require("socket.io");
-const Filter = require("bad-words");
+
 const {
   generateMessage,
   generateLocationMessage
@@ -36,7 +36,7 @@ io.on("connection", socket => {
 
     socket.join(user.room);
 
-    socket.emit("message", generateMessage("Oh Hai doggie!"));
+    // socket.emit("message", generateMessage("Hi Doggie!"));
     socket.broadcast
       .to(user.room)
       .emit(
@@ -52,15 +52,10 @@ io.on("connection", socket => {
     callback();
   });
 
-  socket.on("sendMessage", (reply, callback) => {
+  socket.on("sendMessage", (reply, audiof, callback) => {
     const user = getUser(socket.id);
 
-    const filter = new Filter();
-
-    if (filter.isProfane(reply)) {
-      return callback("profanity is not allowed");
-    }
-    io.to(user.room).emit("message", generateMessage(reply, user.username));
+    io.to(user.room).emit("message", generateMessage( audiof, reply, user.username));
     callback();
   });
 

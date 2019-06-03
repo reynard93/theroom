@@ -10,7 +10,7 @@ const $messages = document.querySelector("#messages");
 //templates
 const messageTemplate = document.querySelector("#message-template").innerHTML;
 const locationTemplate = document.querySelector("#location-template").innerHTML;
-const sidebarTemplate = document.querySelector("#sidebar-template").innerHTML
+const sidebarTemplate = document.querySelector("#sidebar-template").innerHTML;
 
 //options
 const { username, room } = Qs.parse(location.search, {
@@ -19,39 +19,40 @@ const { username, room } = Qs.parse(location.search, {
 
 const autoscroll = () => {
   //new message element
-  const $newMessage  = $messages.lastElementChild
+  const $newMessage = $messages.lastElementChild;
   //height of the new message
-  const newMessageStyles = getComputedStyle($newMessage)
-  const newMessageMargin = parseInt(newMessageStyles.marginBottom)
-  const newMessageHeight = $newMessage.offsetHeight + newMessageMargin
+  const newMessageStyles = getComputedStyle($newMessage);
+  const newMessageMargin = parseInt(newMessageStyles.marginBottom);
+  const newMessageHeight = $newMessage.offsetHeight + newMessageMargin;
 
   //visible height //also the scrollbar height/the visible height of the container
-  const visibleHeight = $messages.offsetHeight
+  const visibleHeight = $messages.offsetHeight;
 
   //Height of messages container
-  const containerHeight = $messages.scrollHeight
+  const containerHeight = $messages.scrollHeight;
 
   //How far have i scrolled? scrolltop is the distance btwn the top of the content and the top of the scrollbar
-  const scrollOffset = $messages.scrollTop + visibleHeight
+  const scrollOffset = $messages.scrollTop + visibleHeight;
 
   //figure up if we are scrolled to the bot before the message was added in
   if (containerHeight - newMessageHeight <= scrollOffset) {
     //setting a value for how far down we're scrolled
-    $messages.scrollTop = $messages.scrollHeight
+    $messages.scrollTop = $messages.scrollHeight;
   }
-}
+};
 
-socket.on("message", msg => {
+socket.on("message", ({ audiof, username, text, createdAt }) => {
   const html = Mustache.render(messageTemplate, {
-    username: msg.username,
-    message: msg.text,
-    createdAt: moment(msg.createdAt).format("h:mm a")
-  }); 
-  var c = document.createElement('audio')
-  c.src = 'http://assets1.theroomsoundboard.com/TearingMeApartLisa.mp3'
-  c.play();
+    username,
+    text,
+    createdAt: moment(createdAt).format("h:mm a")
+  });
+  var c = document.querySelector(`audio[src="sounds/${audiof}"]`);
+  if (c) {
+    c.play();
+  }
   $messages.insertAdjacentHTML("beforeend", html);
-  autoscroll()
+  autoscroll();
 });
 
 socket.on("locationMessage", locmsg => {
@@ -63,25 +64,25 @@ socket.on("locationMessage", locmsg => {
   });
   console.log(html);
   $messages.insertAdjacentHTML("beforeend", html);
-  autoscroll()
+  autoscroll();
 });
 
-socket.on('roomData', ({room, users}) => {
+socket.on("roomData", ({ room, users }) => {
   const html = Mustache.render(sidebarTemplate, {
     room,
     users
-  })
-  document.querySelector('#sidebar').innerHTML = html;
-})
+  });
+  document.querySelector("#sidebar").innerHTML = html;
+});
 
 document.querySelector("#message-form").addEventListener("submit", e => {
   e.preventDefault();
 
   $messageFormButton.setAttribute("disabled", "disabled");
-  //disable
+  //disable e.target.elements.fmessage.value;
   const message = e.target.elements.fmessage.value;
-
-  socket.emit("sendMessage", message, error => {
+  const clink = e.target.elements.fmessage.value.replace(/(\W)/g, "") + ".mp3";
+  socket.emit("sendMessage", message, clink, error => {
     $messageFormButton.removeAttribute("disabled");
     $messageFormInput.value = "";
     $messageFormInput.focus();
@@ -89,7 +90,7 @@ document.querySelector("#message-form").addEventListener("submit", e => {
     if (error) {
       return console.error(error);
     }
-
+    console.log(clink);
     console.log("delivery succeeded");
   });
 });

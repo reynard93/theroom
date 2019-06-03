@@ -13,7 +13,31 @@
 
         <div class="compose">
           <form id="message-form">
-            <input type="text" name="fmessage" placeholder="Message" required autocomplete="off"/>
+            <!-- <input type="text" name="fmessage" placeholder="Message" required autocomplete="off"/> -->
+            <input name="fmessage" placeholder="Message" list="roomsounds" />
+            <datalist id="roomsounds">
+              <option value="Anything for My Princess"> </option>
+              <option value="Anyway, How is Your Sex Life?"> </option>
+              <option value="Why, Lisa, Why?"> </option>
+              <option value="Comments in Your Pocket"> </option>
+              <option value="Cheep, Cheep, Cheep"> </option>
+              <option value="Dont Even Ask"> </option>
+              <option value="Hi Doggie"> </option>
+              <option value="Everything Will Be Fine"> </option>
+              <option value="In a Few Minutes, Bitch"> </option>
+              <option value="Interesting Story"> </option>
+              <option value="Just a Chicken, Cheep"> </option>
+              <option value="You're Tearing Me Apart, Lisa!"> </option>
+              <option value="That's the Idea"> </option>
+              <option value="They Can Feel It"> </option>
+              <option value="Ha, Ha, Ha"> </option>
+              <option value="You Must Be Kidding"> </option>
+              <option value="Best Friend"> </option>
+              <option value="Best Friend Reply"> </option>
+              <option value="Love Is Blind"> </option>
+              <option value="Stop Ganging Up On Me!"> --> </option>
+            </datalist>
+
             <button id="send">Send</button>
           </form>
           <button id="send-location">Send Location</button>
@@ -27,7 +51,7 @@
             <span class="message__name">{{username}}</span>
             <span class="message__meta">{{createdAt}}</span>
           </p>
-          <p>{{message}}</p>
+          <p>{{text}}</p>
       </div>
     </script>
 
@@ -50,6 +74,27 @@
         {{/users}}
       </ul>
     </script>
+
+    <audio src="sounds/AnythingforMyPrincess.mp3"></audio>
+    <audio src="sounds/AnywayHowsisYourSexLife.mp3"></audio>
+    <audio src="sounds/BestFriend.mp3"></audio>
+    <audio src="sounds/BestFriendReply.mp3"></audio>
+    <audio src="sounds/CheepCheepCheep.mp3"></audio>
+    <audio src="sounds/CommentsinYourPocket.mp3"></audio>
+    <audio src="sounds/DontEvenAsk.mp3"></audio>
+    <audio src="sounds/EverythingWillBeFine.mp3"></audio>
+    <audio src="sounds/HaHaHa.mp3"></audio>
+    <audio src="sounds/HiDoggie.mp3"></audio>
+    <audio src="sounds/InaFewMinutesBitch.mp3"></audio>
+    <audio src="sounds/InterestingStory.mp3"></audio>
+    <audio src="sounds/JustaChickenCheep.mp3"></audio>
+    <audio src="sounds/LoveIsBlind.mp3"></audio>
+    <audio src="sounds/StopGangingUpOnMe.mp3"></audio>
+    <audio src="sounds/ThatsTheIdea.mp3"></audio>
+    <audio src="sounds/TheyCanFeelIt.mp3"></audio>
+    <audio src="sounds/WhyWhyLisa.mp3"></audio>
+    <audio src="sounds/YouMustBeKidding.mp3"></audio>
+    <audio src="sounds/YoureTearingMeApartLisa.mp3"></audio>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/mustache.js/3.0.1/mustache.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js"></script>
